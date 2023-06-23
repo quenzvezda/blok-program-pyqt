@@ -68,8 +68,11 @@ class Ui_MainWindow(object):
 
         # Dropdown dengan pilihan pengguna
         dropdown = QComboBox(self.centralwidget)
-        dropdown.setFixedWidth(150) # Set fixed width of the dropdown to match the block
-        dropdown.addItems(['10', '20', '30', '40', '45', '50', '60', '90'])
+        dropdown.setFixedWidth(150)  # Set fixed width of the dropdown to match the block
+        if blockCode in ['F', 'B']:
+            dropdown.addItems(['10cm', '20cm', '30cm', '40cm', '50cm'])
+        else:  # 'L' dan 'R'
+            dropdown.addItems(['30°', '45°', '60°', '90°'])
         layout.addWidget(dropdown)
 
         # Menambah widget ke blocksLayout
@@ -86,6 +89,8 @@ class Ui_MainWindow(object):
                 blockCode = widget.property('blockCode')
                 dropdown = widget.property('dropdown')
                 value = dropdown.currentText()
+                # Parse nilai dari dropdown, hanya mengambil angka
+                value = ''.join(filter(str.isdigit, value))
                 f.write(f'{blockCode}{value}\n')
             f.write(f'S0\n')
                 
