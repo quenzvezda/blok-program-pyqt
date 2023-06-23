@@ -14,6 +14,24 @@ class Ui_MainWindow(object):
         self.mainLayout = QVBoxLayout(self.centralwidget)
         self.blocksLayout = QHBoxLayout()
         self.buttonsLayout = QHBoxLayout()
+        self.upperLayout = QHBoxLayout()  # mendefinisikan upperLayout
+
+        # Dropdown untuk memilih Serial COM
+        self.comDropdown = QComboBox(self.centralwidget)
+        self.comDropdown.addItems(['COM3', 'COM4', 'COM9', 'COM11'])
+        self.upperLayout.addWidget(self.comDropdown)
+
+        # Button untuk mengecek koneksi ke Arduino
+        self.checkButton = QtWidgets.QPushButton(self.centralwidget, text='Cek Koneksi')
+        self.checkButton.clicked.connect(self.checkConnection)
+        self.upperLayout.addWidget(self.checkButton)
+
+        # Label untuk menampilkan status koneksi
+        self.statusLabel = QLabel(self.centralwidget, text='Status: Tidak Terhubung')
+        self.upperLayout.addWidget(self.statusLabel)
+
+        # Menambahkan upperLayout ke mainLayout
+        self.mainLayout.addLayout(self.upperLayout)
 
         # Tombol blok program
         self.block1Button = QtWidgets.QPushButton(self.centralwidget, text='Maju')
@@ -116,6 +134,16 @@ class Ui_MainWindow(object):
     def resetBlocks(self):
         for i in reversed(range(self.blocksLayout.count())): 
             self.blocksLayout.itemAt(i).widget().setParent(None)
+            
+    def checkConnection(self):
+        port = self.comDropdown.currentText()
+        try:
+            ser = serial.Serial(port, 9600)
+            time.sleep(2)  # memberi waktu untuk koneksi serial untuk membuka
+            ser.close()
+            self.statusLabel.setText('Status: Terhubung')
+        except:
+            self.statusLabel.setText('Status: Tidak Terhubung')
 
 if __name__ == "__main__":
     import sys
