@@ -1,5 +1,5 @@
 {
-    "port": "COM4",
+    "port": "COM3",
     "board": "arduino:avr:uno",
     "sketch": "TCCR_BLUETOOTH_V3\\TCCR_BLUETOOTH_V3.ino"
 }

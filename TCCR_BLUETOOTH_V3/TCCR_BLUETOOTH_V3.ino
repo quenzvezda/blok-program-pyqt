@@ -55,7 +55,7 @@ void loop() {
           else if(action == 'B') moveBackward(number);
           else if(action == 'L') turnLeft(number);
           else if(action == 'R') turnRight(number);
-          else if(action == 'S') stop(number);
+          else if(action == 'S') stop();
         }
         dataSize = 0;  // reset ukuran data untuk pengiriman data selanjutnya
         index = 0;  // reset index untuk pengiriman data selanjutnya
@@ -83,50 +83,72 @@ void motorControl(int pin1, int pin2, int pin3, int pin4) {
 
 void moveForward(int number) {
   TCNT1 = 0;
-  OCR1A = 144;
+  OCR1A = 150*(number/10);
   motorControl(LOW, HIGH, LOW, HIGH);
   analogWrite(NA1, 130);
   analogWrite(NA2, 130);
-  Serial.println("ini F" + String(number));
+  Serial.println("ini F dan OCR1A bernilai: " + String(OCR1A) + " - Atau Berjarak: " + String(number) + "cm");
   delay(1000);
 }
 
 void moveBackward(int number) {
   TCNT1 = 0;
-  OCR1A = 144;
+  OCR1A = 150*(number/10);
   motorControl(HIGH, LOW, HIGH, LOW);
   analogWrite(NA1, 130);
   analogWrite(NA2, 130);
-  Serial.println("ini B" + String(number));
+  Serial.println("ini B dan OCR1A bernilai: " + String(OCR1A) + " - Atau Berjarak: " + String(number) + "cm");
   delay(1000);
 }
 
 void turnLeft(int number) {
   TCNT1 = 0;
-  OCR1A = 144;
+  if(number == 30) {
+    OCR1A = 78;
+  } else if (number == 45)
+  {
+    OCR1A = 102;
+  } else if (number == 60)
+  {
+    OCR1A = 122;
+  } else if (number == 90)
+  {
+    OCR1A = 154;
+  }
   motorControl(LOW, HIGH, HIGH, LOW);
   analogWrite(NA1, 150);
   analogWrite(NA2, 150);
-  Serial.println("ini L" + String(number));
+  Serial.println("ini L dan OCR1A bernilai: " + String(OCR1A) + " - Atau Berjarak: " + String(number) + " derajat");
   delay(1000);
 }
 
 void turnRight(int number) {
   TCNT1 = 0;
-  OCR1A = 144;
+  if(number == 30) {
+    OCR1A = 78;
+  } else if (number == 45)
+  {
+    OCR1A = 102;
+  } else if (number == 60)
+  {
+    OCR1A = 122;
+  } else if (number == 90)
+  {
+    OCR1A = 154;
+  }
   motorControl(HIGH, LOW, LOW, HIGH);
   analogWrite(NA1, 150);
   analogWrite(NA2, 150);
-  Serial.println("ini R" + String(number));
+  Serial.println("ini R dan OCR1A bernilai: " + String(OCR1A) + " - Atau Berjarak: " + String(number) + " derajat");
   delay(1000);
 }
 
-void stop(int number) {
+void stop() {
   TCNT1 = 0;
-  OCR1A = 144;
+  OCR1A = 0;
   motorControl(LOW, LOW, LOW, LOW);
   analogWrite(NA1, 150);
   analogWrite(NA2, 150);
-  Serial.println("ini S" + String(number));
+  Serial.println("ini S dan OCR1A bernilai: " + String(OCR1A) + " - Dan Berhenti");
   delay(1000);
 }
