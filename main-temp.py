@@ -17,21 +17,24 @@ class Ui_MainWindow(object):
 
         # Tombol blok program
         self.block1Button = QtWidgets.QPushButton(self.centralwidget, text='Maju')
-        self.block1Button.clicked.connect(lambda: self.addBlock('maju.png', 'F'))
+        self.block1Button.clicked.connect(lambda: self.addBlock('pic\maju.png', 'F'))
         self.buttonsLayout.addWidget(self.block1Button)
 
         self.block2Button = QtWidgets.QPushButton(self.centralwidget, text='Mundur')
-        self.block2Button.clicked.connect(lambda: self.addBlock('mundur.png', 'B'))
+        self.block2Button.clicked.connect(lambda: self.addBlock('pic\mundur.png', 'B'))
         self.buttonsLayout.addWidget(self.block2Button)
         
         self.block3Button = QtWidgets.QPushButton(self.centralwidget, text='Kanan')
-        self.block3Button.clicked.connect(lambda: self.addBlock('kanan.png', 'R'))
+        self.block3Button.clicked.connect(lambda: self.addBlock('pic\kanan.png', 'R'))
         self.buttonsLayout.addWidget(self.block3Button)
         
         self.block4Button = QtWidgets.QPushButton(self.centralwidget, text='Kiri')
-        self.block4Button.clicked.connect(lambda: self.addBlock('kiri.png', 'L'))
+        self.block4Button.clicked.connect(lambda: self.addBlock('pic\kiri.png', 'L'))
         self.buttonsLayout.addWidget(self.block4Button)
-
+        
+        #self.block5Button = QtWidgets.QPushButton(self.centralwidget, text='Stop')
+        #self.block5Button.clicked.connect(lambda: self.addBlock('pic\kiri.png', 'S'))
+        #self.buttonsLayout.addWidget(self.block5Button)
 
         # Tombol Kirim dan Reset
         self.sendButton = QtWidgets.QPushButton(self.centralwidget, text='Kirim')
@@ -84,6 +87,7 @@ class Ui_MainWindow(object):
                 dropdown = widget.property('dropdown')
                 value = dropdown.currentText()
                 f.write(f'{blockCode}{value}\n')
+            f.write(f'S0\n')
                 
         ser = serial.Serial('COM3', 9600)  # ganti 'COM4' dengan port yang sesuai
         time.sleep(2)  # memberi waktu untuk koneksi serial untuk membuka
