@@ -101,11 +101,6 @@ class Ui_MainWindow(object):
             ser.write(pair[1].encode())  # kirim angka
             time.sleep(1)
 
-        while True:
-            if ser.in_waiting > 0:
-                line = ser.readline().decode('utf-8').rstrip()
-                print(line)
-
         ser.close()  # tutup koneksi ketika selesai
 
 
