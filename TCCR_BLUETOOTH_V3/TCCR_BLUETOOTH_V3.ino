@@ -33,34 +33,39 @@ void setup() {
 }
 
 void loop() {
+  // cek apakah ada data yang masuk
   while (Serial.available() > 0) {
-    if(dataSize == 0) {  // jika ukuran data belum diterima, baca ukuran data
-      dataSize = Serial.parseInt();
-    } else {  // jika ukuran data telah diterima, baca data
-      if (index % 2 == 0) {
-        char incomingChar = Serial.read();
-        receivedData[index / 2] = incomingChar;
-      } else {
-        int incomingNumber = Serial.parseInt();
-        receivedDataNumbers[index / 2] = incomingNumber;
-      }
-      index++;
+    // baca seluruh baris
+    char line[256];
+    Serial.readBytesUntil('\n', line, sizeof(line) - 1);
 
-      // jika semua data telah diterima, jalankan fungsi sesuai data
-      if(index / 2 >= dataSize) {
-        for(int i = 0; i < dataSize; i++) {
-          char action = receivedData[i];
-          int number = receivedDataNumbers[i];
-          if(action == 'F') moveForward(number);
-          else if(action == 'B') moveBackward(number);
-          else if(action == 'L') turnLeft(number);
-          else if(action == 'R') turnRight(number);
-          else if(action == 'S') stop();
-        }
-        dataSize = 0;  // reset ukuran data untuk pengiriman data selanjutnya
-        index = 0;  // reset index untuk pengiriman data selanjutnya
-      }
+    // bagi baris menjadi instruksi berdasarkan koma
+    char* instruction = strtok(line, ",");
+    while (instruction != NULL) {
+      // bagi setiap instruksi menjadi huruf dan angka
+      receivedData[index] = instruction[0];
+      receivedDataNumbers[index] = atoi(instruction + 1);
+
+      // pergi ke instruksi berikutnya
+      instruction = strtok(NULL, ",");
+      index++;
     }
+
+    // sekarang index adalah ukuran data
+    dataSize = index;
+
+    // jalankan fungsi sesuai data
+    for(int i = 0; i < dataSize; i++) {
+      char action = receivedData[i];
+      int number = receivedDataNumbers[i];
+      if(action == 'F') moveForward(number);
+      else if(action == 'B') moveBackward(number);
+      else if(action == 'L') turnLeft(number);
+      else if(action == 'R') turnRight(number);
+      else if(action == 'S') stop(number);
+    }
+    dataSize = 0;  // reset ukuran data untuk pengiriman data selanjutnya
+    index = 0;  // reset index untuk pengiriman data selanjutnya
   }
   delay(1000);
 }
