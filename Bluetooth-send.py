@@ -1,7 +1,7 @@
 import serial
 import time
 
-ser = serial.Serial('COM4', 9600)  # ganti 'COM4' dengan port yang sesuai
+ser = serial.Serial('COM3', 9600)  # ganti 'COM4' dengan port yang sesuai
 time.sleep(2)  # memberi waktu untuk koneksi serial untuk membuka
 
 with open('output.txt', 'r') as f:

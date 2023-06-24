@@ -62,7 +62,7 @@ void loop() {
       else if(action == 'B') moveBackward(number);
       else if(action == 'L') turnLeft(number);
       else if(action == 'R') turnRight(number);
-      else if(action == 'S') stop(number);
+      else if(action == 'S') stop();
     }
     dataSize = 0;  // reset ukuran data untuk pengiriman data selanjutnya
     index = 0;  // reset index untuk pengiriman data selanjutnya
