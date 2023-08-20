@@ -112,7 +112,8 @@ class Ui_MainWindow(object):
                 f.write(f'{blockCode}{value}\n')
             f.write(f'S0\n')
                 
-        ser = serial.Serial('COM3', 9600)  # ganti 'COM4' dengan port yang sesuai
+        selected_com = str(self.comDropdown.currentText())
+        ser = serial.Serial(selected_com, 9600)  # ganti 'COM4' dengan port yang sesuai
         time.sleep(2)  # memberi waktu untuk koneksi serial untuk membuka
 
         with open('output.txt', 'r') as f:
@@ -120,6 +121,16 @@ class Ui_MainWindow(object):
 
         ser.write(data.encode())  # kirim data
         time.sleep(1)  # menunggu sedikit
+        
+        while True:
+            if ser.in_waiting > 0:
+                line = ser.readline().decode('utf-8').rstrip()
+                print(line)
+                
+                # Jika pesan khusus diterima, keluar dari loop
+                if line == "Semua Perintah Dijalankan":
+                    break
+
 
         # Menampilkan serial monitor tapi gk akan pernah berhenti
         # while True:

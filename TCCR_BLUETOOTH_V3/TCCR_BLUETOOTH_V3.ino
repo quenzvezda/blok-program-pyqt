@@ -66,6 +66,7 @@ void loop() {
     }
     dataSize = 0;  // reset ukuran data untuk pengiriman data selanjutnya
     index = 0;  // reset index untuk pengiriman data selanjutnya
+    Serial.println("Semua Perintah Dijalankan");
   }
   delay(1000);
 }
@@ -93,7 +94,7 @@ void moveForward(int number) {
   analogWrite(NA1, 130);
   analogWrite(NA2, 130);
   Serial.println("ini F dan OCR1A bernilai: " + String(OCR1A) + " - Atau Berjarak: " + String(number) + "cm");
-  delay(1000);
+  delay(2000);
 }
 
 void moveBackward(int number) {
@@ -103,7 +104,7 @@ void moveBackward(int number) {
   analogWrite(NA1, 130);
   analogWrite(NA2, 130);
   Serial.println("ini B dan OCR1A bernilai: " + String(OCR1A) + " - Atau Berjarak: " + String(number) + "cm");
-  delay(1000);
+  delay(2000);
 }
 
 void turnLeft(int number) {
@@ -124,7 +125,7 @@ void turnLeft(int number) {
   analogWrite(NA1, 150);
   analogWrite(NA2, 150);
   Serial.println("ini L dan OCR1A bernilai: " + String(OCR1A) + " - Atau Berjarak: " + String(number) + " derajat");
-  delay(1000);
+  delay(2000);
 }
 
 void turnRight(int number) {
@@ -145,7 +146,7 @@ void turnRight(int number) {
   analogWrite(NA1, 150);
   analogWrite(NA2, 150);
   Serial.println("ini R dan OCR1A bernilai: " + String(OCR1A) + " - Atau Berjarak: " + String(number) + " derajat");
-  delay(1000);
+  delay(2000);
 }
 
 void stop() {
@@ -155,5 +156,5 @@ void stop() {
   analogWrite(NA1, 150);
   analogWrite(NA2, 150);
   Serial.println("ini S dan OCR1A bernilai: " + String(OCR1A) + " - Dan Berhenti");
-  delay(1000);
+  delay(2000);
 }
